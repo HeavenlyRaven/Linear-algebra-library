@@ -6,7 +6,7 @@ Description: Python library for working with linear algebra
 
 Developers: [HeavenlyRaven](https://github.com/HeavenlyRaven), [ArthurChains](https://github.com/ArthurChains)
 
-Plan: 
+Plan: Тест
 
 1) Matrix class
 2) Operations with matrices
