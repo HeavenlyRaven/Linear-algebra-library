@@ -1,6 +1,6 @@
 # Linear-algebra-library
 
-Project name: PyLinalg
+Project name: Linanime
 
 Description: Python library for working with linear algebra
 
