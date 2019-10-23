@@ -16,8 +16,8 @@ class Matrix:
             raise TypeError("You can only pass a list to the Matrix constructor")
 
         for row in data:
-            if type(row) != list:
-                raise TypeError("You can only pass a list as a row")
+            if not isinstance(row, (list, Vector)):
+                raise TypeError("You can only pass a list or a vector as a row")
             if any(not isinstance(x, (int, float)) for x in row):
                 raise TypeError("Values of a matrix must be integers or floats")
 
@@ -27,14 +27,14 @@ class Matrix:
         self.__data = []
 
         for row in data:
-            self.__data.append(Vector(row))
+            self.__data.append(row if isinstance(row, Vector) else Vector(row))
 
         for row in data:
             self.columns = max(self.columns, len(row))
 
         for i in range(self.rows):
             if len(self.__data[i]) < self.columns:
-                new_row_data = self.__data[i].data_copy()+([0]*(self.columns-len(self.__data[i])))
+                new_row_data = list(self.__data[i])+([0]*(self.columns-len(self.__data[i])))
                 self.__data[i] = Vector(new_row_data)
 
     def __str__(self):
@@ -81,7 +81,7 @@ class Matrix:
 
     def __mul__(self, other):
 
-        if type(other) == int or type(other) == float:
+        if isinstance(other, (int, float)):
 
             new_data = []
 
@@ -95,9 +95,9 @@ class Matrix:
         elif isinstance(other, Matrix):
 
             if self.columns != other.rows:
-                raise MatrixDimensionError("Can't multiply two matrices:\
-                 number of columns in the first matrix\
-                  must equal the number of rows in the second matrix")
+                raise MatrixDimensionError("Can't multiply two matrices: "
+                                           "number of columns in the first matrix "
+                                           "must equal the number of rows in the second matrix")
 
             new_data = []
 
@@ -114,10 +114,7 @@ class Matrix:
 
     def __rmul__(self, other):
 
-        if type(other) == int or type(other) == float:
-            return self.__mul__(other)
-        else:
-            raise TypeError("Can only multiply two matrices or a matrix and a number")
+        return self.__mul__(other)
 
     def __pow__(self, power):
 
@@ -138,7 +135,7 @@ class Matrix:
 
     def __setitem__(self, key, value):
 
-        if isinstance(value, list):
+        if isinstance(value, (list, Vector)):
             if len(self.__data[key]) == len(value):
                 if all(isinstance(x, (int, float)) for x in value):
                     self.__data[key] = value
@@ -147,7 +144,7 @@ class Matrix:
             else:
                 raise MatrixDimensionError("Can't assign a new row: the number of elements is not the same")
         else:
-            raise TypeError("You can only pass a list as a new row")
+            raise TypeError("You can only pass a list or a vector as a new row")
 
     @property
     def transposed(self):
@@ -186,4 +183,3 @@ class ZeroMatrix(Matrix):
             raise TypeError("ZeroMatrix takes two positive integers as its dimensions")
 
         Matrix.__init__(self, [[0 for j in range(m)] for i in range(n)])
-
