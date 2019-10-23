@@ -118,7 +118,7 @@ class Vector:
         """
 
         :param other: Vector object.
-        :return: Number equaled scalar multiplication of self and other.
+        :return: Number equaled scalar multiplication of self and other (dot product).
         """
 
         if isinstance(other, (int, float)):
@@ -139,7 +139,7 @@ class Vector:
         """
 
         :param other: Vector object.
-        :return: Number equaled scalar multiplication of other and self.
+        :return: Number equaled scalar multiplication of other and self (dot product).
         """
 
         return self.__mul__(other)
@@ -175,3 +175,22 @@ class Vector:
         """
 
         return self.__data.copy()
+    
+    def v_mul_std(self, other):
+
+        """
+
+        :param other: Vector object.
+        :return: Cross product (standard basis).
+        """
+
+        if not isinstance(other, Vector):
+            raise TypeError("You can only multiply two vectors")
+        if len(self) != len(other) != 3:
+            return VectorDimensionError("For vector multiplication number of elements in vectors must equal 3")
+
+        x = self[2]*other[3] - other[2]*self[3]
+        y = self[3]*other[1] - other[3]*self[1]
+        z = self[1]*other[2] - other[1]*self[2]
+
+        return Vector([x, y, z])
