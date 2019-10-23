@@ -16,7 +16,7 @@ class Matrix:
     Matrix class.
 
     If no argument is given, the constructor rises TypeError.
-    The argument must only be a list.
+    The argument must be a list.
     """
 
     def __init__(self, data):
