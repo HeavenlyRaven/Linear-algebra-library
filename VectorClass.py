@@ -1,11 +1,20 @@
 class VectorDimensionError(Exception):
 
-    """ Error class for vectors """
+    """
+
+    Error class for Vector.
+    """
 
 
 class Vector:
 
-    """ Vector class description """
+    """
+
+    Vector class.
+
+    If no argument is given, the constructor rises TypeError.
+    The argument must only be a list.
+    """
 
     def __init__(self, data):
 
@@ -20,13 +29,28 @@ class Vector:
 
     def __str__(self):
 
+        """
+
+        :return: String representation of a vector object.
+        """
+
         return "\t".join(list(map(str, self.__data)))
 
     def __repr__(self):
 
+        """
+
+        :return: repr(self)
+        """
+
         return repr(self.__data)
 
     def __abs__(self):
+
+        """
+
+        :return: Absolute of self.
+        """
 
         length_squared = 0
         for element in self.__data:
@@ -36,13 +60,30 @@ class Vector:
 
     def __len__(self):
 
+        """
+
+        :return: Number of elements in self.
+        """
+
         return len(self.__data)
 
     def __eq__(self, other):
 
+        """
+
+        :param other: Vector object.
+        :return: self==other.
+        """
+
         return self.__data == other.__data
 
     def __add__(self, other):
+
+        """
+
+        :param other: Vector object.
+        :return: self+other.
+        """
 
         if isinstance(other, Vector):
 
@@ -56,6 +97,12 @@ class Vector:
 
     def __sub__(self, other):
 
+        """
+
+        :param other: Vector object.
+        :return: self-other.
+        """
+
         if isinstance(other, Vector):
 
             if len(self) == len(other):
@@ -67,6 +114,12 @@ class Vector:
             raise TypeError("You can only subtract a vector from a vector")
 
     def __mul__(self, other):
+
+        """
+
+        :param other: Vector object.
+        :return: Number equaled scalar multiplication of self and other.
+        """
 
         if isinstance(other, (int, float)):
 
@@ -83,13 +136,31 @@ class Vector:
 
     def __rmul__(self, other):
 
+        """
+
+        :param other: Vector object.
+        :return: Number equaled scalar multiplication of other and self.
+        """
+
         return self.__mul__(other)
 
     def __getitem__(self, item):
 
+        """
+
+        :param item: int
+        :return: self element at {item} index.
+        """
+
         return self.__data[item]
 
     def __setitem__(self, key, value):
+
+        """
+
+        :param key: int
+        :param value: int OR float
+        """
 
         if not isinstance(value, (int, float)):
             raise TypeError("Values of a vector must be integers or floats")
@@ -97,5 +168,10 @@ class Vector:
         self.__data[key] = value
 
     def list(self):
+
+        """
+
+        :return: Listed self.__data
+        """
 
         return self.__data.copy()
