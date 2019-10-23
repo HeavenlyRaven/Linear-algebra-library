@@ -3,12 +3,21 @@ from .VectorClass import Vector
 
 class MatrixDimensionError(Exception):
 
-    """ Error class for matrices """
+    """
+
+    Error class for Matrix.
+    """
 
 
 class Matrix:
 
-    """ Matrix class description """
+    """
+
+    Matrix class.
+
+    If no argument is given, the constructor rises TypeError.
+    The argument must only be a list.
+    """
 
     def __init__(self, data):
 
@@ -39,6 +48,11 @@ class Matrix:
 
     def __str__(self):
 
+        """
+
+        :return: String representation of a matrix object.
+        """
+
         for row in self.__data:
             self.matrix_string += str(row)+"\n"
 
@@ -46,12 +60,24 @@ class Matrix:
 
     def __eq__(self, other):
 
+        """
+
+        :param other: Matrix object.
+        :return: self==other.
+        """
+
         if self.__data == other.__data:
             return True
         else:
             return False
 
     def __add__(self, other):
+
+        """
+
+        :param other: Matrix object.
+        :return: Return self+other.
+        """
 
         if (self.rows != other.rows) or (self.columns != other.columns):
             raise MatrixDimensionError("Can't add two matrices with different dimensions")
@@ -67,6 +93,12 @@ class Matrix:
 
     def __sub__(self, other):
 
+        """
+
+        :param other: Matrix object.
+        :return: Return self-other.
+        """
+
         if (self.rows != other.rows) or (self.columns != other.columns):
             raise MatrixDimensionError("Can't subtract one matrix from another: they must have the same dimension")
 
@@ -80,6 +112,12 @@ class Matrix:
         return Matrix(new_data)
 
     def __mul__(self, other):
+
+        """
+
+        :param other: Matrix object.
+        :return: Return self*other.
+        """
 
         if isinstance(other, (int, float)):
 
@@ -114,9 +152,21 @@ class Matrix:
 
     def __rmul__(self, other):
 
+        """
+
+        :param other: Matrix object.
+        :return: Return other*self.
+        """
+
         return self.__mul__(other)
 
     def __pow__(self, power):
+
+        """
+
+        :param power: int
+        :return: Return self raised in power.
+        """
 
         if power % 1 == 0 and power > 0:
             if self.rows == self.columns:
@@ -131,9 +181,21 @@ class Matrix:
 
     def __getitem__(self, item):
 
+        """
+
+        :param item: int
+        :return: self Vector at {item} index.
+        """
+
         return self.__data[item]
 
     def __setitem__(self, key, value):
+
+        """
+
+        :param key: int
+        :param value: Vector or a List.
+        """
 
         if isinstance(value, (list, Vector)):
             if len(self.__data[key]) == len(value):
@@ -148,6 +210,10 @@ class Matrix:
 
     @property
     def transposed(self):
+        """
+
+        :return: Transposed self.
+        """
 
         new_data = []
         for j in range(self.columns):
@@ -157,8 +223,36 @@ class Matrix:
 
         return Matrix(new_data)
 
+    def norm(self, l_norm=False):
+        """
+
+        :param l_norm: Bool.
+        :return: Left norm of self if l_norm==True else Right norm.
+        """
+        if l_norm:
+            new_matrix = self.transposed
+        else:
+            new_matrix = self
+            tmp = []
+            for i in range(len(new_matrix.__data)):
+                s = 0
+                for j in range(len(new_matrix[0])):
+                    s += abs(new_matrix[i][j])
+                tmp.append(s)
+            return max(tmp)
+
 
 class IdentityMatrix(Matrix):
+
+    """
+
+    Sub class of Matrix.
+
+    :param n: Amount of rows and lines.
+
+    If no argument is given, the constructor rises TypeError.
+    The argument must only be an integer.
+    """
 
     def __init__(self, n):
 
@@ -176,6 +270,17 @@ class IdentityMatrix(Matrix):
 
 
 class ZeroMatrix(Matrix):
+
+    """
+
+    Sub class of Matrix.
+
+    :param n: Amount of lines.
+    :param m: Amount of rows.
+
+    If no argument is given, the constructor rises TypeError.
+    The arguments must only be integers.
+    """
 
     def __init__(self, n, m):
 
