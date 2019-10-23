@@ -2,8 +2,11 @@ from .MatrixClass import MatrixDimensionError
 
 
 def determinant(M):
+    """
 
-    """ Takes a matrix and returns its determinant calculated using Gauss-Jordan elimination"""
+    :param M: Matrix object.
+    :return: Determinant of given matrix.
+    """
 
     if M.rows != M.columns:
         raise MatrixDimensionError("You can calculate a determinant of a square matrix only")
@@ -13,7 +16,7 @@ def determinant(M):
     n = M.rows
     for i in range(n):
         k = i
-        for j in range(i+1, n):
+        for j in range(i + 1, n):
             if abs(M[j][i]) > abs(M[k][i]):
                 k = j
         if abs(M[k][i]) < e:
@@ -25,12 +28,11 @@ def determinant(M):
             det *= -1
 
         det *= M[i][i]
-        for j in range(i+1, n):
+        for j in range(i + 1, n):
             M[i][j] /= M[i][i]
         for j in range(n):
             if j != i and abs(M[j][i]) > e:
-                for k in range(i+1, n):
+                for k in range(i + 1, n):
                     M[j][k] -= M[i][k] * M[j][i]
 
     return det
-
