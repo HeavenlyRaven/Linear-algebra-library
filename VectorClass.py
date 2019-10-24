@@ -88,7 +88,7 @@ class Vector:
         if isinstance(other, Vector):
 
             if len(self) == len(other):
-                return Vector(self.__data[i] + other.__data[i] for i in range(len(self)))
+                return Vector([self.__data[i] + other.__data[i] for i in range(len(self))])
             else:
                 raise VectorDimensionError("For addition number of elements in vectors must be equal")
 
@@ -106,7 +106,7 @@ class Vector:
         if isinstance(other, Vector):
 
             if len(self) == len(other):
-                return Vector(self.__data[i] - other.__data[i] for i in range(len(self)))
+                return Vector([self.__data[i] - other.__data[i] for i in range(len(self))])
             else:
                 raise VectorDimensionError("For subtraction number of elements in vectors must be equal")
 
