@@ -1,13 +1,15 @@
 from .MatrixClass import MatrixDimensionError
 
 
-def determinant(M):
+def determinant(A):
     """
 
     :param M: Matrix object.
     :return: Determinant of given matrix.
     """
 
+    from copy import deepcopy
+    M = deepcopy(A)
     if M.rows != M.columns:
         raise MatrixDimensionError("You can calculate a determinant of a square matrix only")
 
